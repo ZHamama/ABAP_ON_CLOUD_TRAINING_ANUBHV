@@ -1,6 +1,6 @@
 @AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Anakytical SALES Dshborad'
+@EndUserText.label: 'Anakytical SALES Dshborad For Fiori 17042026'
 @Metadata.ignorePropagatedAnnotations: false
 @VDM.viewType: #CONSUMPTION
 @Analytics.query: true
