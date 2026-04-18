@@ -1,0 +1,15 @@
+@EndUserText.label: 'Service Definition for Travel projection'
+define service ZATS_ZH_TRAVELPROCESSOR_SD {
+  expose ZATS_ZH_TRAVEL_PROCESSO     as Travel;
+  expose ZATS_ZH_BOOKING_PROCESSOR   as BOOKING;
+  expose ZATS_ZH_BOOKSUPPL_PROCESSOR as BOOKSUPPL;
+  expose /DMO/I_Agency               as Agency;
+  expose /DMO/I_Customer             as Customer;
+  expose /DMO/I_Travel_Status_VH     as TravelStatus;
+  expose I_Currency                  as Currency;
+  expose /DMO/I_Connection           as Connection;
+  expose /DMO/I_Booking_Status_VH    as BookingStatus;
+  expose /DMO/I_Carrier              as Carrier;
+  expose /DMO/I_Supplement           as Supplement;
+  expose /DMO/I_SupplementText       as SupplementText;
+}
