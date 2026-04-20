@@ -4,7 +4,7 @@
 @VDM.viewType: #COMPOSITE
 define view entity ZATS_ZH_BOOKING
   as select from /dmo/booking_m
-composition[0..*] of ZATS_ZH_BOOKSUPPL as            _BOOKSUPPL
+composition[0..*] of ZATS_ZH_BOOKSUPPL               as _BOOKSUPPL
 association to parent ZATS_ZH_TRAVEL                 as _Travel
 on $projection.TravelId = _Travel.TravelId
   association of one to one /DMO/I_Customer          as _Customer       
