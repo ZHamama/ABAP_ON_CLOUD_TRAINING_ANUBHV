@@ -1,29 +1,130 @@
 @Metadata.layer: #CUSTOMER
+@UI.headerInfo:{
+          typeName: 'Travel Request',
+          typeNamePlural: 'Travels Requests',
+          title:{ value: 'TravelId' },
+          description:{ value: 'Description' }
+          }
 
 annotate entity ZATS_ZH_TRAVEL_PROCESSO with
 {
+  //***************************************
+  //                FACET
+  //***************************************
+  @UI.facet: [{
+             purpose: #HEADER ,
+             id     : 'TravelHeaderPrice',
+             type   : #DATAPOINT_REFERENCE,
+             position: 10,
+             targetQualifier: 'REITER1'
+             },
+              {
+             purpose: #HEADER ,
+             id     : 'TravelStatus',
+             type   : #DATAPOINT_REFERENCE,
+             position: 20,
+             targetQualifier: 'REITER2'
+             },
+//----------------------------------------------------------------------
+                 {
+                 purpose: #STANDARD,
+                 type   :  #COLLECTION,
+                 id     : 'idGeneralInfo',
+                 position: 10,
+                 label :  'General Information'
+                 },
+                 {
+  //  *----------BLOCK 1----------*
+                 purpose: #STANDARD,
+                 type:    #IDENTIFICATION_REFERENCE,
+                 id  : 'BasicData',
+                 label : 'Basic Data',
+                 parentId: 'idGeneralInfo',
+                 position: 10
+                 },
+  //  *----------BLOCK 2----------*
+                { purpose: #STANDARD,
+                 type:    #FIELDGROUP_REFERENCE,
+                 id  : 'PriceDatabOOKING',
+                 label : 'Info Price Travel',
+                 parentId: 'idGeneralInfo',
+                 position: 20,
+                 targetQualifier: 'BLOCK2'
+                 },
+  //  *----------BLOCK 3----------*
+                 {purpose: #STANDARD,
+                 type:    #FIELDGROUP_REFERENCE,
+                 id  : 'TravelData',
+                 label: 'Travel Info',
+                 parentId: 'idGeneralInfo',
+                 position: 30,
+                 targetQualifier: 'BLOCK3'
+                 },
+  //  *----------BLOCK 4----------*
+                 { purpose: #STANDARD,
+                 type:    #FIELDGROUP_REFERENCE,
+                 id  : 'HOTELSupplements',
+                 label: 'Supplements',
+                 parentId: 'idGeneralInfo',
+                 position: 40,
+                 targetQualifier: 'BLOCK4'
+                 },
+//----------------------------------------------------------------------
+                 {
+                 purpose: #STANDARD,
+                 type   :  #LINEITEM_REFERENCE,
+                 id     : 'idItemsData',
+                 position: 20,
+                 label :  'Bookings',
+                 targetElement: '_Booking'
+                 }
+
+             ]
+  //***************************************
   @UI.selectionField: [{ position: 10 }]
   @UI.lineItem: [{ position: 10 }]
+  @UI.identification: [{ position: 10  }]
+  @UI.fieldGroup: [{ position :10, qualifier: 'BLOCK2' }]
   TravelId;
+
   @UI.selectionField: [{ position: 20 }]
   @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 30 }]
+  @UI.fieldGroup: [{ position :10, qualifier: 'BLOCK3' }]
   AgencyId;
+
   @UI.selectionField: [{ position: 30 }]
   @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 40 }]
+  @UI.fieldGroup: [{ position :20, qualifier: 'BLOCK3' }]
   CustomerId;
+
   @UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ position :20, qualifier: 'BLOCK2' }]
   BeginDate;
+
   @UI.lineItem: [{ position: 50 }]
+  @UI.fieldGroup: [{ position :30, qualifier: 'BLOCK2' }]
   EndDate;
-  //  BookingFee;
+
+  @UI.fieldGroup: [{ position :30, qualifier: 'BLOCK4' }]
+  BookingFee;
   @UI.selectionField: [{ position: 40 }]
   @UI.lineItem: [{ position: 60 }]
+  @UI.dataPoint:{ qualifier: 'REITER1' , title:'Travel  Price'}
+  @UI.fieldGroup: [{ position :30, qualifier: 'BLOCK2' }]
   TotalPrice;
-  //  CurrencyCode;
-  //  Description;
+  @UI.fieldGroup: [{ position :20, qualifier: 'BLOCK4' }]
+  CurrencyCode;
+  @UI.identification: [{ position: 20 }]
+  @UI.fieldGroup: [{ position :10, qualifier: 'BLOCK4' }]
+  Description;
   @UI.selectionField: [{ position: 50 }]
   @UI.lineItem: [{ position: 70, importance: #HIGH, criticality: 'Status_LEVEL' }]
-    OverallStatus;
+  @UI.dataPoint:  { qualifier: 'REITER2' , title:'Travel Status', criticality:'Status_LEVEL'       }
+  @UI.fieldGroup: [{ position :40, qualifier: 'BLOCK3' }]
+  OverallStatus;
+
   //  CreatedBy;
   //  CreatedAt;
   //  LastChangedBy;

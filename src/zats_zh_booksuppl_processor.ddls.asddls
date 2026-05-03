@@ -2,6 +2,7 @@
 @EndUserText.label: 'BOOKSuplment Projection entity view'
 @Metadata.ignorePropagatedAnnotations: false
 @VDM.viewType: #CONSUMPTION
+@Metadata.allowExtensions: true
 define view entity ZATS_ZH_BOOKSUPPL_PROCESSOR 
 as projection on ZATS_ZH_BOOKSUPPL
 {
