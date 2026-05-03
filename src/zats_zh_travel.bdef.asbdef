@@ -1,0 +1,67 @@
+
+//managed will tell RAP that Developer want RAP to create most
+// of code automatically
+managed
+// for extra code to implement in the class
+implementation in class zbp_ats_zh_travel unique;
+//Tell the RAP engine to syntax check our Code Strictly
+strict ( 2 );
+//ROOT Entity Behavior
+define behavior for ZATS_ZH_TRAVEL alias TRAVEL
+//Tell the RAP that it should WRITE / UPDQTE/ MODIFY/DELETE data from wich table
+persistent table /dmo/travel_m
+//HOW the data will be locked ENQUEUE/DEQUEUE if the TRAVEL Data is locked by USER, other
+//users PARALLELY cannot edit its BOOKING qnd supplements
+lock master
+//To control DATA SECURITY  permission authorization  of can create edit delte data
+//TO DO   Defveloper  mustr implement coding ifor this line in CLASS
+authorization master ( instance )
+//it is a field wich is used by framework to evaluate
+//Whether data was changed in meanwhile or not
+etag master LastChangedAt
+{
+//BEhavior what RAP generate for  us
+  create ;
+  update;
+  delete;
+//Static Feture Control wich
+//says thet a user cannot change change primary Key
+// in update mode
+// Field ( readonly ) TravelId;
+// that create of booking depends on travel, like you cannot create
+// so line item w/o crqting header
+  association _Booking { create; }
+}
+//Behavior for BOOKING entity
+define behavior for ZATS_ZH_BOOKING alias Booking
+persistent table /dmo/booking_m
+// if parent data is locked ,child is also qutomaticlly
+lock dependent by _Travel
+// lets check the authorizarion and role parent if that pass, we
+// allow booking also to be updated
+authorization dependent by _Travel
+etag master LastChangedAt
+{
+// user is allowed to only change and delete booking independently
+  update;
+  delete;
+// while user is editing booking data
+//they cannot change the TRAVEL header data
+  field ( readonly ) TravelId;
+  association _Travel;
+ //Supplement cration is possible with booking
+  association _BOOKSUPPL { create; }
+}
+
+define behavior for ZATS_ZH_BOOKSUPPL alias BOOKSUPPL
+persistent table /dmo/booksuppl_m
+lock dependent by _Travel
+authorization dependent by _Travel
+etag master LastChangedAt
+{
+  update;
+  delete;
+  field ( readonly ) TravelId, BookingId;
+  association _Travel;
+  association _BOOKING;
+}
